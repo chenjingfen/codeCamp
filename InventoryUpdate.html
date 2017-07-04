@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Inventory Update</title>
+</head>
+<body>
+<script>
+    /*
+     * 依照一个存着新进货物的二维数组，更新存着现有库存(在 arr1 中)的二维数组.
+     * 如果货物已存在则更新数量 . 如果没有对应货物则把其加入到数组中，更新最新的数量.
+     * 返回当前的库存数组，且按货物名称的字母顺序排列.
+     * */
+
+    function updateInventory(arr1, arr2) {
+        // 请保证你的代码考虑到所有情况
+        var arrNew = [];
+        var arrAdd = arr2;
+        arr1.forEach(function (item, index, array) {
+            var flag = true;
+            if (item.length > 1) {
+                arr2.forEach(function (item2, index2, array2) {
+                    var itemNew = [];
+                    if (item2[1] === item[1]) {
+                        itemNew.push(item2[0] + item[0]);
+                        itemNew.push(item[1]);
+                        arrNew.push(itemNew);
+                        arrAdd.splice(index2, 1);
+                        flag = false;
+                    }
+                });
+                if (flag) {
+                    arrNew.push(item);
+                }
+            }
+        });
+        arrAdd.forEach(function (item, index, array) {
+            arrNew.push(item);
+        });
+        return arrNew.sort(function(arr1,arr2){
+            console.log(arr1)
+            var x1= arr1[1].toUpperCase();
+            var x2= arr2[1].toUpperCase();
+            if(x1<x2){
+                return -1;
+            }
+            if(x1>x2){
+                return 1;
+            }
+            return 0;
+        });
+    }
+
+
+    // 仓库库存示例
+    var curInv = [
+        [21, "Bowling Ball"],
+        [2, "Dirty Sock"],
+        [1, "Hair Pin"],
+        [5, "Microphone"]
+    ];
+
+    var newInv = [
+        [2, "Hair Pin"],
+        [3, "Half-Eaten Apple"],
+        [67, "Bowling Ball"],
+        [7, "Toothpaste"]
+    ];
+
+    console.log(updateInventory([[21, "Bowling Ball"], [2, "Dirty Sock"], [1, "Hair Pin"], [5, "Microphone"]], [[2, "Hair Pin"], [3, "Half-Eaten Apple"], [67, "Bowling Ball"], [7, "Toothpaste"]]) );
+
+
+</script>
+</body>
+</html>
