@@ -1,0 +1,157 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Friendly Date Ranges</title>
+</head>
+<body>
+<script>
+    /*
+     * 把常见的日期格式如：YYYY-MM-DD 转换成一种更易读的格式。
+
+     易读格式应该是用月份名称代替月份数字，用序数词代替数字来表示天 (1st 代替 1).
+
+     记住不要显示那些可以被推测出来的信息: 如果一个日期区间里结束日期与开始日期相差小于一年，
+     则结束日期就不用写年份了；在这种情况下，如果月份开始和结束日期如果在同一个月，
+     则结束日期月份也不用写了。
+
+     另外, 如果开始日期年份是当前年份，且结束日期与开始日期小于一年，则开始日期的年份也不用写。
+     * */
+
+    function makeFriendlyDates(arr) {
+
+        function dayFormat(day) {
+            var last = day % 10;
+            if (last == 1 && day != 11) {
+                return day + "st";
+            }
+            else if (last === 2 && day != 12) {
+                return day + "nd";
+            } else if (last === 3 && day != 13) {
+                return day + "rd";
+            } else {
+                return day + "th";
+            }
+        }
+
+        var monthLIst = {
+            1: "January",
+            2: "February",
+            3: "March",
+            4: "April",
+            5: "May",
+            6: "June",
+            7: "July",
+            8: "August",
+            9: "September",
+            10: "October",
+            11: "November",
+            12: "December"
+        };
+
+        var today = new Date();
+        var year = today.getFullYear();
+        var month = today.getMonth();
+        var day = today.getDate();
+
+        var arr0 = arr[0].split("-").map(Number);
+        var arr1 = arr[1].split("-").map(Number);
+        console.log(arr0);
+        console.log(arr1);
+
+        if (arr0[0] > arr1[0]) {
+            //不合理
+            return undefined;
+        } else if (arr0[0] === arr1[0]) {
+            if (arr0[1] > arr1[1]) {
+                //不合理
+                return undefined;
+            } else if (arr0[1] === arr1[1]) {
+                if (arr0[2] > arr1[2]) {
+                    //不合理
+                    return undefined;
+                } else if (arr0[2] === arr1[2]) {
+                    //同年同月同日
+                    var returnArr = [];
+                    var str = "";
+                    if (arr0[0] === year) {
+                        str = monthLIst[arr0[1]] + " " + dayFormat(arr0[2]);
+                    } else {
+                        str = monthLIst[arr0[1]] + " " + dayFormat(arr0[2]) + ", " + arr0[0];
+                    }
+                    returnArr.push(str);
+                    return returnArr;
+                }
+                else {
+                    //同年 同月 不同日
+                    var returnArr = [];
+                    var str = "";
+                    var str1 = "";
+                    if (arr0[0] === year) {
+                        str = monthLIst[arr0[1]] + " " + dayFormat(arr0[2]);
+
+                    } else {
+                        str = monthLIst[arr0[1]] + " " + dayFormat(arr0[2]) + ", " + arr0[0];
+                    }
+                    str1 = dayFormat(arr1[2]);
+                    returnArr.push(str);
+                    returnArr.push(str1);
+                    return returnArr;
+                }
+            } else {
+                //同年 不同月
+                var returnArr = [];
+                var str = "";
+                var str1 = "";
+                if (arr0[0] === year) {
+                    str = monthLIst[arr0[1]] + " " + dayFormat(arr0[2]);
+
+                } else {
+                    str = monthLIst[arr0[1]] + " " + dayFormat(arr0[2]) + ", " + arr0[0];
+                }
+                str1 = monthLIst[arr1[1]] + " " + dayFormat(arr1[2]);
+                returnArr.push(str);
+                returnArr.push(str1);
+                return returnArr;
+            }
+        } else {
+            //不同年
+            var returnArr = [];
+            var str = "";
+            var str1 = "";
+            if (arr0[0] === year) {
+                str = monthLIst[arr0[1]] + " " + dayFormat(arr0[2]);
+
+            } else {
+                str = monthLIst[arr0[1]] + " " + dayFormat(arr0[2]) + ", " + arr0[0];
+            }
+            if (arr1[0] - arr0[0] === 1) {
+                if (arr0[1] > arr1[1]) {
+                    str1 = monthLIst[arr1[1]] + " " + dayFormat(arr1[2]);
+                }
+                else if (arr0[1] === arr1[1]) {
+                    if (arr0[2] > arr1[2]) {
+                        str1 = monthLIst[arr1[1]] + " " + dayFormat(arr1[2]);
+                    } else if (arr0[2] <= arr1[2]) {
+                        str1 = monthLIst[arr1[1]] + " " + dayFormat(arr1[2]) + ", " + arr1[0];
+                    }
+                }else {
+                    str1 = monthLIst[arr1[1]] + " " + dayFormat(arr1[2]) + ", " + arr1[0];
+                }
+            }
+            else {
+                str1 = monthLIst[arr1[1]] + " " + dayFormat(arr1[2]) + ", " + arr1[0];
+            }
+            returnArr.push(str);
+            returnArr.push(str1);
+            return returnArr;
+        }
+
+
+    }
+
+    console.log(makeFriendlyDates(["2004-11-17", "2005-12-25"]));
+
+</script>
+</body>
+</html>

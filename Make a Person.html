@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Make a Person</title>
+</head>
+<body>
+<script>
+    /*
+     * 用下面给定的方法构造一个对象.
+
+     方法有 getFirstName(), getLastName(), getFullName(),
+     setFirstName(first), setLastName(last), and setFullName(firstAndLast).
+
+     所有有参数的方法只接受一个字符串参数.
+
+     所有的方法只与实体对象交互.
+     * */
+
+    /*var Person = function(firstAndLast) {
+     var first=firstAndLast.substr(0,firstAndLast.indexOf(" "));
+     var last=firstAndLast.substr(firstAndLast.indexOf(" ")+1,firstAndLast.length);
+     this.first=first;
+     this.last=last;
+     this.firstAndLast=this.first+" "+this.last;
+     };
+
+     Person.prototype.getFirstName=function(){
+     return this.first;
+     };
+
+     Person.prototype.getLastName=function(){
+     return this.last;
+     };
+
+     Person.prototype.getFullName=function(){
+     return this.first+" "+this.last;
+     };
+
+     Person.prototype.setFirstName=function(first){
+     this.first=first;
+     };
+     Person.prototype.setLastName=function(last){
+     this.last=last;
+     };
+
+     Person.prototype.setFullName=function(firstAndLast){
+     var first=firstAndLast.substr(0,firstAndLast.indexOf(" "));
+     var last=firstAndLast.substr(firstAndLast.indexOf(" ")+1,firstAndLast.length);
+     this.first=first;
+     this.last=last;
+     this.firstAndLast=this.first+" "+this.last;
+     };*/
+
+    var Person = function (firstAndLast) {
+        var first = firstAndLast.substr(0, firstAndLast.indexOf(" "));
+        var last = firstAndLast.substr(firstAndLast.indexOf(" ") + 1, firstAndLast.length);
+        this.first = first;
+        this.last = last;
+        this.firstAndLast = this.first + " " + this.last;
+        this.setFirstName = function (firstName) {
+            this.first = firstName;
+            first = firstName;
+        };
+        this.setLastName = function (lastName) {
+            this.last = lastName;
+            last = lastName;
+        };
+
+        this.setFullName = function (firstAndLastName) {
+            firstAndLast = firstAndLastName;
+            var first = firstAndLast.substr(0, firstAndLast.indexOf(" "));
+            var last = firstAndLast.substr(firstAndLast.indexOf(" ") + 1, firstAndLast.length);
+            this.first = first;
+            this.last = last;
+            this.firstAndLast = this.first + " " + this.last;
+
+        };
+
+    };
+
+    Person.prototype.getFirstName=function(){
+        return this.first;
+    };
+
+    Person.prototype.getLastName=function(){
+        return this.last;
+    };
+
+    Person.prototype.getFullName=function(){
+        return this.first+" "+this.last;
+    };
+    var bob = new Person('Bob Ross');
+    bob.setFullName("Haskell Curry");
+    console.log(bob.getLastName());
+</script>
+</body>
+</html>
